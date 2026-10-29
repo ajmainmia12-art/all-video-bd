@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>ALL VIDEO BD PRO</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:sans-serif;background:#0f0f0f;color:#fff}.header{background:#ff0000;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:999}.logo{font-weight:900;font-size:18px}.ad{background:#fff;color:#000;margin:10px;padding:10px;border-radius:10px;text-align:center;border:2px dashed red}.coin{background:#1a1a2e;border:1px solid gold;margin:10px;padding:10px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}.search{background:#212121;padding:10px;display:flex;gap:8px;position:sticky;top:52px;z-index:99}.search input{flex:1;padding:10px;border-radius:20px;border:none}.tabs{display:flex;gap:5px;background:#212121;padding:8px;overflow:auto}.tabs button{padding:8px 14px;border-radius:20px;border:none;background:#333;color:#fff;white-space:nowrap}.tabs .active{background:red}.videos{padding:10px;display:grid;gap:12px}.card{background:#212121;border-radius:12px;overflow:hidden;border:1px solid #333}.card video{width:100%;height:200px;background:#000}.yt-box{position:relative;width:100%;height:200px;background:#000;cursor:pointer;display:flex;align-items:center;justify-content:center}.yt-box iframe{width:100%;height:100%;border:none}.yt-play{position:absolute;background:rgba(255,0,0,0.9);color:white;padding:12px 20px;border-radius:30px;font-weight:bold;font-size:16px}.info{padding:10px}.btns{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.btns button,.btns select{padding:7px 12px;border-radius:8px;border:none;font-weight:bold;font-size:12px}.footer{background:#1a1a1a;padding:15px;text-align:center;font-size:12px;color:#aaa;margin-top:15px}.footer a{color:#0ff;margin:0 6px;text-decoration:none;cursor:pointer}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;padding:20px;overflow:auto}.modal-content{background:#212121;padding:20px;border-radius:12px;max-width:600px;margin:auto}</style></head><body>
+<div class="header"><div class="logo">🔴 ALL VIDEO BD PRO</div><button onclick="login()" style="background:#fff;color:red;padding:5px 12px;border-radius:20px;border:none;font-weight:bold">👤 Login</button></div>
+<div class="ad">📢 Google Ad 1 - Top</div>
+<div class="coin"><span>🪙 Coin: <b id="coinCount" style="color:gold">0</b></span><span>💰 <b id="takaCount" style="color:#0f8">0 Tk</b></span><button onclick="withdraw()" style="background:gold;border:none;padding:6px 12px;border-radius:15px;font-weight:bold">Withdraw</button></div>
+<div class="search"><input id="search" placeholder="ভিডিও খুঁজুন..." onkeyup="searchVideo()"><button onclick="showTrending()" style="background:#ffcc00;border:none;padding:8px 12px;border-radius:20px;font-weight:bold">🔥 Trending</button></div>
+<div class="tabs"><button class="active" onclick="filterCat('all',this)">All</button><button onclick="filterCat('live',this)">📺 Live TV</button><button onclick="filterCat('natok',this)">নাটক</button><button onclick="filterCat('waz',this)">Waz</button><button onclick="filterCat('song',this)">গান</button></div>
+<div id="videoList" class="videos"></div>
+<div class="ad">📢 Google Ad 2 - Download Income</div>
+<div class="footer"><a onclick="openModal('about')">About</a> | <a onclick="openModal('privacy')">Privacy</a> | <a onclick="openModal('contact')">Contact</a><p>©2026 ALL VIDEO BD PRO - শুধু ভিডিও দেখলে Coin!</p></div>
+<div id="modal" class="modal" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><span style="float:right;cursor:pointer" onclick="closeModal()">❌</span><div id="modalText"></div></div></div>
+
+<script>
+let coins=parseInt(localStorage.getItem("coins")||"0"),todayWatch=parseInt(localStorage.getItem("todayWatch")||"0"),lastDate=localStorage.getItem("lastDate")||"",today=new Date().toDateString();if(lastDate!=today){todayWatch=0;localStorage.setItem("lastDate",today);}
+let watchedVideos=new Set(JSON.parse(localStorage.getItem("watched")||"[]"));
+
+let videos=[
+{title:"Jamuna TV Live - দেখলেই 3 Coin",cat:"news live",src:"https://www.youtube.com/embed/wTcNtgA6Vc4",type:"yt",likes:1250,id:"yt1"},
+{title:"বাংলা নাটক 2026 - Full HD",cat:"natok",src:"https://www.w3schools.com/html/mov_bbb.mp4",type:"mp4",likes:890,id:"mp41"},
+{title:"Best Waz 2026",cat:"waz",src:"https://www.youtube.com/embed/5qap5aO4i9A",type:"yt",likes:3400,id:"yt2"},
+{title:"Funny Video BD",cat:"funny",src:"https://www.youtube.com/embed/9bZkp7q19f0",type:"yt",likes:2100,id:"yt3"}
+];
+
+function showVideos(list=videos){
+let h="";list.forEach((v,i)=>{
+if(v.type=="mp4"){
+h+=`<div class="card"><video controls onplay="addCoin('${v.id}')" src="${v.src}"></video><div class="info"><h3 style="margin:5px 0">${v.title}</h3><div class="btns"><button style="background:#333;color:#fff" onclick="likeVideo(${i})">👍 <span id="like${i}">${v.likes}</span></button><button style="background:#333;color:#fff">▶️ ভিডিও দেখুন - 3 Coin</button><select onchange="downloadQ(this,'${v.src}')"><option>⬇️ Download</option><option>360p Free</option><option>720p HD</option><option>1080p Premium 10Tk</option></select><button style="background:#1877f2;color:#fff" onclick="shareVideo()">Share</button></div></div></div>`;
+}else{
+h+=`<div class="card"><div class="yt-box" id="box_${v.id}" onclick="playYT('${v.id}','${v.src}')"><iframe id="ifr_${v.id}" style="display:none" src="" allowfullscreen></iframe><div class="yt-play" id="play_${v.id}">▶️ Play - 3 Coin পাবেন</div></div><div class="info"><h3 style="margin:5px 0">${v.title}</h3><div class="btns"><button style="background:#333;color:#fff" onclick="likeVideo(${i})">👍 <span id="like${i}">${v.likes}</span></button><button style="background:#333;color:#fff">▶️ ভিডিও দেখুন</button><select onchange="downloadQ(this,'${v.src}')"><option>⬇️ Download</option><option>360p Free</option><option>720p HD</option><option>1080p Premium 10Tk</option></select><button style="background:#1877f2;color:#fff" onclick="shareVideo()">Share</button></div></div></div>`;
+}
+});
+document.getElementById("videoList").innerHTML=h;updateCoinUI();
+}
+
+function updateCoinUI(){document.getElementById("coinCount").innerText=coins;document.getElementById("takaCount").innerText=(coins/10).toFixed(1)+" Tk";localStorage.setItem("coins",coins);localStorage.setItem("todayWatch",todayWatch);localStorage.setItem("watched",JSON.stringify([...watchedVideos]));}
+
+function addCoin(vid){
+if(todayWatch>=100){alert("আজকের Limit শেষ! কাল আবার পাবেন!");return;}
+if(watchedVideos.has(vid)){return;} // এক ভিডিও 1 বারই Coin
+watchedVideos.add(vid);
+coins+=3; todayWatch++; updateCoinUI();
+let p=document.createElement("div");p.innerText="+3 Coin! 🪙";p.style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:gold;color:#000;padding:15px 25px;border-radius:25px;font-weight:bold;z-index:9999;font-size:18px";document.body.appendChild(p);setTimeout(()=>p.remove(),1500);
+}
+
+function playYT(id,src){
+let box=document.getElementById("box_"+id);
+let ifr=document.getElementById("ifr
