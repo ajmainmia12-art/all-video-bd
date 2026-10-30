@@ -3,139 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPER APP BD - FINAL LIVE</title>
+<title>SUPER APP BD - LOGIN PRO</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f57224">
 <script data-cfasync="false" src="https://dcengg.org/14/92776c0ae48ef75c61957570b3aeb4a5"></script>
 <style>
 body{margin:0;background:#000;color:#fff;font-family:Arial}
-.header{background:#f57224;padding:12px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:100}
-.tabs{display:flex;background:#111;padding:8px;gap:6px;position:sticky;top:44px;z-index:90;overflow-x:auto}
-.tab{background:#222;padding:10px 16px;border-radius:25px;white-space:nowrap;cursor:pointer;font-size:13px;font-weight:bold}
+.header{background:#f57224;padding:12px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
+.search-box{max-width:500px;margin:0 auto;padding:8px;background:#111;position:sticky;top:44px;z-index:90;display:flex;gap:6px}
+.search-box input{flex:1;padding:10px;border-radius:25px;border:1px solid #333;background:#222;color:#fff}
+.search-box button{padding:10px 16px;border-radius:25px;background:#f57224;border:none;color:#fff;font-weight:bold}
+.tabs{display:flex;background:#111;padding:8px;gap:6px;overflow-x:auto}
+.tab{background:#222;padding:10px 14px;border-radius:25px;white-space:nowrap;cursor:pointer;font-size:12px;font-weight:bold}
 .tab.active{background:#f57224}
 .feed{max-width:500px;margin:0 auto;padding-bottom:80px}
 .card{background:#121212;margin:12px;border-radius:15px;overflow:hidden;border:1px solid #222;position:relative}
-.card video,.card iframe{width:100%;height:480px;border:none;background:#000}
+.card video,.card iframe{width:100%;height:440px;border:none;background:#000}
 .info{padding:12px}
-.btn{padding:11px;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer;margin-top:6px;font-size:13px}
-.btn-play{background:#fff;color:#000}
-.btn-down{background:#f57224;color:#fff}
-.btn-fb{background:#1877f2;color:#fff}
-.btn-yt{background:#ff0000;color:#fff}
-.ad-badge{background:linear-gradient(135deg,#f57224,#ff9800);padding:6px 12px;border-radius:15px;font-size:10px;position:absolute;top:10px;left:10px;z-index:5}
+.actions{display:flex;gap:10px;margin-top:8px}
+.act{flex:1;background:#222;padding:10px;border-radius:10px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold}
+.act.liked{background:#ff3040;color:#fff}
+.comment-box{padding:10px;background:#1a1a1a;display:none}
+.comment-box input{width:70%;padding:8px;border-radius:15px;border:1px solid #333;background:#222;color:#fff}
+.comment-list{font-size:12px;color:#aaa;margin-top:6px;max-height:100px;overflow-y:auto}
+.btn{display:block;padding:11px;border-radius:10px;text-align:center;font-weight:bold;text-decoration:none;margin-top:6px;font-size:12px}
+.ad-badge{background:linear-gradient(135deg,#f57224,#ff9800);padding:5px 10px;border-radius:15px;font-size:9px;position:absolute;top:10px;left:10px;z-index:5}
+.profile{display:flex;align-items:center;gap:8px;padding:10px}
+.profile img{width:36px;height:36px;border-radius:50%}
 </style>
 </head>
 <body>
-<div class="header">🔥 SUPER APP BD - Masrafi Islam BD - LIVE</div>
+
+<!-- 🔐 LOGIN MODAL -->
+<div id="loginModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;display:flex;justify-content:center;align-items:center;padding:20px">
+<div style="background:#121212;padding:25px;border-radius:20px;max-width:350px;width:100%;border:2px solid #f57224;text-align:center">
+<h2 style="color:#f57224;margin:0">🔐 SUPER APP BD</h2>
+<p style="color:#fff;font-weight:bold;margin:6px 0">Login করুন</p>
+<p style="color:#aaa;font-size:12px">Like, Comment, Upload করতে Login করুন</p>
+<input id="loginName" type="text" placeholder="👤 নাম - Masrafi" style="width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#222;color:#fff;box-sizing:border-box">
+<input id="loginPhone" type="text" placeholder="📱 Phone - 01XXXXXXXXX" style="width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#222;color:#fff;box-sizing:border-box">
+<button onclick="doLogin()" style="width:100%;padding:12px;background:#f57224;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:10px;font-size:16px;cursor:pointer">🚀 LOGIN</button>
+<button onclick="guestLogin()" style="width:100%;padding:10px;background:#222;color:#fff;border:1px solid #444;border-radius:10px;margin-top:8px;cursor:pointer">👤 Guest হিসেবে দেখুন</button>
+<p style="font-size:10px;color:#666;margin-top:10px">Rajshahi থেকে Login - সব Video দেখতে পারবেন</p>
+</div>
+</div>
+
+<div class="header">
+<span>🔥 SUPER APP BD</span>
+<span id="userDisplay" onclick="doLogout()" style="cursor:pointer;font-size:12px">👤 Login</span>
+</div>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Search - সালারের গল্প...">
+<button onclick="searchVideo()">Search</button>
+</div>
+
 <div class="tabs">
-<div class="tab active" onclick="switchTab('foryou',this)">🎬 For You - LIVE</div>
-<div class="tab" onclick="switchTab('fb',this)">📘 Facebook Reel</div>
-<div class="tab" onclick="switchTab('yt',this)">▶️ YouTube Channel</div>
-<div class="tab" onclick="switchTab('upload',this)">📤 Upload - Unlimited</div>
+<div class="tab active" onclick="switchTab('feed',this)">🎬 For You</div>
+<div class="tab" onclick="switchTab('yt',this)">▶️ YouTube</div>
+<div class="tab" onclick="switchTab('fb',this)">📘 Facebook</div>
+<div class="tab" onclick="switchTab('upload',this)">📤 Upload</div>
+<div class="tab" onclick="switchTab('profile',this)">👤 Profile</div>
 </div>
 
 <div class="feed" id="feed"></div>
 
-<div id="fb" style="display:none;max-width:500px;margin:0 auto">
-<div class="card">
-<div class="ad-badge">🔥 Daraz Ad 79% OFF</div>
-<!-- আপনার দেওয়া Facebook Reel -->
-<iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&show_text=0&width=500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-<div class="info">
-<p><b>🔥 Facebook Viral Reel - Masrafi Islam BD</b></p>
-<p style="color:#aaa;font-size:11px">@masrafiislambd • Facebook Reel</p>
-<a href="https://www.facebook.com/share/r/1A4DC2HSCd/" target="_blank" class="btn btn-fb" style="display:block;text-decoration:none">📘 Full Video Facebook এ দেখুন</a>
-<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" class="btn" style="display:block;background:#fff;color:#f57224;text-decoration:none;text-align:center">🛒 Daraz 79% OFF - ৳299</a>
-</div>
-</div>
-<div class="card">
-<p style="padding:12px;font-weight:bold">📘 আপনার Facebook Page এর সব Video</p>
-<iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-</div>
+<div id="yt" style="display:none;max-width:500px;margin:0 auto">
+<div class="card"><p style="padding:12px;font-weight:bold">▶️ Masrafi Islam BD</p><iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" allowfullscreen></iframe><div class="info"><a href="https://youtube.com/@masrafiislambd" target="_blank" class="btn" style="background:#ff0000;color:#fff">📺 Subscribe</a></div></div>
 </div>
 
-<div id="yt" style="display:none;max-width:500px;margin:0 auto">
-<div class="card">
-<p style="padding:12px;font-weight:bold">▶️ Masrafi Islam BD - YouTube Channel</p>
-<iframe src="https://www.youtube.com/embed?listType=user&list=masrafiislambd" allowfullscreen style="height:280px"></iframe>
-<div class="info">
-<a href="https://youtube.com/@masrafiislambd?si=4RtrSu5EZxBAK6ps" target="_blank" class="btn btn-yt" style="display:block;text-decoration:none;text-align:center">📺 YouTube Channel Subscribe করুন</a>
-</div>
-</div>
-<div class="card">
-<p style="padding:12px">🔥 Latest Islamic Videos</p>
-<iframe src="https://www.youtube.com/embed/videoseries?list=PL" allowfullscreen style="height:400px"></iframe>
-</div>
+<div id="fb" style="display:none;max-width:500px;margin:0 auto">
+<div class="card"><div style="background:#1877f2;padding:50px 20px;text-align:center"><p style="font-size:40px">📘</p><p>Facebook Reel</p></div><div class="info"><a href="https://www.facebook.com/share/r/1A4DC2HSCd/" target="_blank" class="btn" style="background:#1877f2;color:#fff">📘 Facebook এ দেখুন</a></div></div>
 </div>
 
 <div id="upload" style="display:none;max-width:500px;margin:0 auto;padding:12px">
-<div style="background:#111;padding:18px;border-radius:15px;border:2px dashed #f57224">
-<h3 style="color:#f57224;text-align:center">📤 Unlimited Upload - সবাই দেখবে</h3>
-<input type="file" id="upFile" accept="video/*" style="width:100%;padding:10px;background:#222;color:white;border-radius:8px;margin:6px 0">
-<input type="text" id="upTitle" placeholder="Title" style="width:100%;padding:12px;background:#222;color:white;border-radius:8px;border:1px solid #444">
-<button onclick="uploadVideo()" style="width:100%;padding:14px;background:#f57224;color:white;border:none;border-radius:10px;font-weight:bold;margin-top:8px">🚀 UPLOAD - For You তে যাবে</button>
+<div style="background:#111;padding:16px;border-radius:15px;border:2px dashed #f57224">
+<h3 style="color:#f57224;text-align:center">📤 Upload - Login Required</h3>
+<input type="file" id="upFile" accept="video/*" style="width:100%;padding:10px;background:#222;color:#fff;border-radius:8px">
+<input type="text" id="upTitle" placeholder="Title - সালারের গল্প" style="width:100%;padding:10px;background:#222;color:#fff;border-radius:8px;margin-top:6px;border:1px solid #444;box-sizing:border-box">
+<button onclick="uploadVideo()" style="width:100%;padding:12px;background:#f57224;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px">🚀 UPLOAD LIVE</button>
+</div>
+</div>
+
+<div id="profile" style="display:none;max-width:500px;margin:0 auto;padding:12px">
+<div style="background:#111;padding:20px;border-radius:15px;text-align:center">
+<img src="https://via.placeholder.com/80/f57224/fff?text=M" style="width:80px;height:80px;border-radius:50%">
+<h2 id="pName">@masrafiislambd</h2>
+<p style="color:#aaa" id="pPhone">Rajshahi User</p>
+<p>📹 <span id="totalVideos">0</span> Videos | ❤️ <span id="totalLikes">0</span> Likes</p>
+<a href="https://youtube.com/@masrafiislambd" target="_blank" class="btn" style="background:#ff0000;color:#fff">📺 YouTube</a>
+<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" class="btn" style="background:#fff;color:#f57224">🛒 Daraz 79% OFF</a>
+<button onclick="doLogout()" style="width:100%;padding:10px;background:#333;color:#fff;border:none;border-radius:10px;margin-top:10px">🚪 Logout</button>
 </div>
 </div>
 
 <script>
+let currentUser = localStorage.getItem('superapp_user') ? JSON.parse(localStorage.getItem('superapp_user')) : null;
 let videos=[
-{title:"🔥 Facebook Viral Reel - আপনার দেওয়া Video",user:"@masrafiislambd",src:"https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&show_text=0&width=500",type:"facebook",isFb:true},
-{title:"সততার পুরস্কার! সালার পেল ১ লাখ টাকার ফোন 📱❤️",user:"@masrafiislambd",src:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"youtube"},
-{title:"গরিব ফলওয়ালা সালারের সততা দেখে অবাক ধনী মহিলা!",user:"@masrafiislambd",src:"https://www.youtube.com/embed/9bZkp7q19f0",type:"youtube"},
-{title:"বৃদ্ধের বিরিয়ানি ফেলে দিল! শেষে চাকরি হারিয়ে কাঁদল মেয়েটি 😢",user:"@masrafiislambd",src:"https://www.youtube.com/embed/kJQP7kiw5Fk",type:"youtube"},
-{title:"📤 User Upload Video - TikTok Style",user:"@Rahim",src:"https://www.w3schools.com/html/mov_bbb.mp4",type:"mp4"}
+{title:"সততার পুরস্কার! সালার পেল ১ লাখ টাকার ফোন 📱❤️",user:"@masrafiislambd",src:"https://www.youtube.com/embed/ScMzIvxBSi4",likes:1520,comments:["ভাই অসাধারণ!","মাশাআল্লাহ"]},
+{title:"গরিব ফলওয়ালা সালারের সততা!",user:"@masrafiislambd",src:"https://www.youtube.com/embed/9bZkp7q19f0",likes:980,comments:[]},
+{title:"বৃদ্ধের বিরিয়ানি ফেলে দিল!",user:"@masrafiislambd",src:"https://www.youtube.com/embed/kJQP7kiw5Fk",likes:2100,comments:["কষ্ট লাগলো"]},
+{title:"📤 User Upload Demo",user:"@Rahim",src:"https://www.w3schools.com/html/mov_bbb.mp4",likes:45,comments:[]}
 ];
 
-function renderFeed(){
-let feed=document.getElementById('feed');
-feed.innerHTML="";
-videos.forEach((v,i)=>{
-let player=v.type=='mp4'?`<video controls playsinline><source src="${v.src}"></video>`:`<iframe src="${v.src}" allowfullscreen></iframe>`;
-feed.innerHTML+=`
-<div class="card">
-<div class="ad-badge">Ad - Daraz 79% OFF</div>
-${player}
-<div class="info">
-<p><b>${v.title}</b></p>
-<p style="color:#aaa;font-size:11px">${v.user} • ${v.type}</p>
-<div class="btn btn-play" onclick="playWithAd()">▶️ PLAY - Monetag Ad সহ</div>
-<div class="btn btn-down" onclick="downloadWithAd()">⬇️ DOWNLOAD - Daraz Ad সহ</div>
-<div style="display:flex;gap:6px;margin-top:6px">
-<a href="https://youtube.com/@masrafiislambd?si=4RtrSu5EZxBAK6ps" target="_blank" style="flex:1;background:#ff0000;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:12px">📺 YouTube Subscribe</a>
-<a href="https://www.facebook.com/share/r/1A4DC2HSCd/" target="_blank" style="flex:1;background:#1877f2;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:12px">📘 Facebook Follow</a>
-</div>
-<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" style="display:block;background:#fff;color:#f57224;text-align:center;padding:11px;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:6px">🛒 Daraz Mega Deal ৳299 - CLICK</a>
-</div>
-</div>`;
-});
+function checkLogin(){
+if(currentUser){
+document.getElementById('loginModal').style.display='none';
+document.getElementById('userDisplay').innerText='👤 '+currentUser.name;
+document.getElementById('pName').innerText=currentUser.name;
+document.getElementById('pPhone').innerText=currentUser.phone;
+}else{
+document.getElementById('loginModal').style.display='flex';
 }
-
-function playWithAd(){window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');}
-function downloadWithAd(){window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');setTimeout(()=>{window.location.href='https://s.daraz.com.bd/s.YeIxh?cc';},1000);}
-
-function uploadVideo(){
-let file=document.getElementById('upFile').files[0];
-let title=document.getElementById('upTitle').value;
-if(!file){alert('Video Select করুন!');return;}
-let reader=new FileReader();
-reader.onload=(e)=>{
-videos.unshift({title:title||'New Video',user:'@You',src:e.target.result,type:'mp4'});
-renderFeed();
-switchTab('foryou',document.querySelector('.tab'));
+}
+function doLogin(){
+let name=document.getElementById('loginName').value;
+let phone=document.getElementById('loginPhone').value;
+if(!name){alert('নাম দিন!');return;}
+if(!phone){alert('Phone দিন!');return;}
+currentUser={name:name,phone:phone,joined:new Date().toLocaleDateString()};
+localStorage.setItem('superapp_user',JSON.stringify(currentUser));
+checkLogin();
 window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');
 }
-reader.readAsDataURL(file);
+function guestLogin(){
+currentUser={name:'Guest',phone:'guest'};
+localStorage.setItem('superapp_user',JSON.stringify(currentUser));
+checkLogin();
 }
+function doLogout(){localStorage.removeItem('superapp_user');location.reload();}
 
-function switchTab(id,el){
-document.getElementById('feed').style.display='none';
-document.getElementById('fb').style.display='none';
-document.getElementById('yt').style.display='none';
-document.getElementById('upload').style.display='none';
-document.getElementById(id).style.display='block';
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-el.classList.add('active');
-if(id=='foryou')renderFeed();
+function renderFeed(list=videos){
+let feed=document.getElementById('feed');
+feed.innerHTML="";
+list.forEach((v,i)=>{
+feed.innerHTML+=`<div class="card">
+<div class="ad-badge">Ad</div>
+<div class="profile"><img src="https://via.placeholder.com/36/f57224/fff?text=${v.user[1]}"><div><b>${v.user}</b><br><span style="font-size:10px;color:#aaa">Rajshahi • Live</span></div></div>
+${v.src.includes('youtube')?`<iframe src="${v.src}" allowfullscreen></iframe>`:`<video controls playsinline><source src="${v.src}"></video>`}
+<div class="info"><p><b>${v.title}</b></p>
+<div class="actions"><div class="act" id="like-${i}" onclick="likeVideo(${i})">❤️ ${v.likes} Like</div><div class="act" onclick="toggleComment(${i})">💬 ${v.comments.length}</div><div class="act" onclick="shareVideo('${v.title}')">↗️ Share</div></div>
+<div class="comment-box" id="cbox-${i}"><div style="display:flex;gap:6px"><input id="cin-${i}" placeholder="Comment..."><button onclick="addComment(${i})" style="background:#f57224;color:#fff;border:none;border-radius:15px;padding:6px 12px">Send</button></div><div class="comment-list" id="clist-${i}">${v.comments.map(c=>`• ${c}<br>`).join('')}</div></div>
+<a href="https://demper.org/4/e8283733c30352cb0223ec5729c1cb88" target="_blank" class="btn" style="background:#fff;color:#000">▶️ PLAY</a>
+<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" class="btn" style="background:#fff;color:#f57224;border:1px solid #f57224">🛒 Daraz 79% OFF</a>
+</div></div>`;
+});
+document.getElementById('totalVideos').innerText=videos.length;
+document.getElementById('totalLikes').innerText=videos.reduce((a,b)=>a+b.likes,0);
 }
-renderFeed();
+function likeVideo(i){
+if(!currentUser||currentUser.name=='Guest'){alert('Login করুন Like দিতে!');document.getElementById('loginModal').style.display='flex';return;}
+videos[i].likes++;
+document.getElementById(`like-${i}`).innerText=`❤️ ${videos[i].likes} Like`;
+document.getElementById(`like-${i}`).classList.add('liked');
+window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');
+}
+function toggleComment(i){let b=document.getElementById(`cbox-${i}`);b.style.display=b.style.display=='block'?'none':'block';}
+function addComment(i){
+if(!currentUser||currentUser.name=='Guest'){alert('Login করুন Comment করতে!');document.getElementById('loginModal').style.display='flex';return;}
+let inp=document.getElementById(`cin-${i}`);if(!inp.value)return;
+let txt=currentUser.name+': '+inp.value;
+videos[i].comments.push(txt);
+document.getElementById(`clist-${i}`).innerHTML+=`• ${txt}<br>`;inp.value='';
+window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');
+}
+function shareVideo(t){if(navigator.share){navigator.share({title:t,url:location.href});}else{prompt("Copy:",location.href);}window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');}
+function searchVideo(){let q=document.getElementById('searchInput').value.toLowerCase();if(!q){renderFeed();return;}renderFeed(videos.filter(v=>v.title.toLowerCase().includes(q)));}
+function uploadVideo(){
+if(!currentUser||currentUser.name=='Guest'){alert('Login করুন Upload করতে!');document.getElementById('loginModal').style.display='flex';return;}
+let file=document.getElementById('upFile').files[0];let title=document.getElementById('upTitle').value;
+if(!file){alert('Video Select করুন!');return;}
+let r=new FileReader();r.onload=(e)=>{videos.unshift({title:title||'New Video by '+currentUser.name,user:'@'+currentUser.name,src:e.target.result,likes:0,comments:[]});renderFeed();switchTab('feed',document.querySelector('.tab'));window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');};r.readAsDataURL(file);
+}
+function switchTab(id,el){['feed','yt','fb','upload','profile'].forEach(x=>{let d=document.getElementById(x);if(d)d.style.display='none';});document.getElementById(id).style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');if(id=='feed')renderFeed();}
+checkLogin();renderFeed();
 </script>
 </body>
-  </html>
+                                                                                   </html>
