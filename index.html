@@ -3,99 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Super App BD - Clean 100%</title>
-<!-- শুধু Safe Social Bar Ad -->
+<title>SUPER APP BD - FINAL LIVE</title>
 <script data-cfasync="false" src="https://dcengg.org/14/92776c0ae48ef75c61957570b3aeb4a5"></script>
 <style>
 body{margin:0;background:#000;color:#fff;font-family:Arial}
-.header{background:#f57224;padding:12px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:30;display:flex;justify-content:space-between}
-.tabs{display:flex;overflow-x:auto;background:#111;padding:8px;gap:6px;position:sticky;top:44px;z-index:20}
-.tab{white-space:nowrap;background:#222;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer}
+.header{background:#f57224;padding:12px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:100}
+.tabs{display:flex;background:#111;padding:8px;gap:6px;position:sticky;top:44px;z-index:90;overflow-x:auto}
+.tab{background:#222;padding:10px 16px;border-radius:25px;white-space:nowrap;cursor:pointer;font-size:13px;font-weight:bold}
 .tab.active{background:#f57224}
-.card{background:#111;margin:10px;border-radius:12px;overflow:hidden;border:1px solid #222}
-.card video,.card iframe{width:100%;height:210px;border:none}
-.info{padding:10px}
-.btn{padding:11px;border-radius:8px;text-align:center;font-weight:bold;cursor:pointer;margin:4px 0;font-size:14px}
-.btn-play{background:#00c853;color:#fff}
+.feed{max-width:500px;margin:0 auto;padding-bottom:80px}
+.card{background:#121212;margin:12px;border-radius:15px;overflow:hidden;border:1px solid #222;position:relative}
+.card video,.card iframe{width:100%;height:480px;border:none;background:#000}
+.info{padding:12px}
+.btn{padding:11px;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer;margin-top:6px;font-size:13px}
+.btn-play{background:#fff;color:#000}
 .btn-down{background:#f57224;color:#fff}
-.btn-share{background:#0084ff;color:#fff}
-.btn-like{background:#222;color:#fff;border:1px solid #444}
-.btn-daraz{background:#fff;color:#f57224;display:block;text-decoration:none;text-align:center;padding:11px;border-radius:8px}
-.adBanner{background:#222;color:#ffeb3b;padding:6px;text-align:center;font-size:12px;border-radius:6px;margin:5px 0;display:none}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:50}
-.modalBox{background:#111;padding:20px;border-radius:12px;width:85%;max-width:320px;border:2px solid #f57224}
-input{width:100%;padding:12px;background:#222;color:white;border-radius:8px;border:1px solid #444;margin:6px 0;box-sizing:border-box}
-#chatBox{height:180px;overflow-y:auto;background:#000;padding:10px;border:1px solid #333;margin:10px;border-radius:10px}
-.msg{background:#222;padding:6px 10px;border-radius:10px;margin:4px 0;font-size:13px}
+.btn-fb{background:#1877f2;color:#fff}
+.btn-yt{background:#ff0000;color:#fff}
+.ad-badge{background:linear-gradient(135deg,#f57224,#ff9800);padding:6px 12px;border-radius:15px;font-size:10px;position:absolute;top:10px;left:10px;z-index:5}
 </style>
 </head>
 <body>
-<div class="header"><span>🔥 SUPER APP BD</span><div><span onclick="openSearch()">🔍</span><span onclick="openLogin()" style="margin-left:10px">👤</span></div></div>
+<div class="header">🔥 SUPER APP BD - Masrafi Islam BD - LIVE</div>
 <div class="tabs">
-<div class="tab active" onclick="switchTab('videos',this)">🎬 Videos</div>
-<div class="tab" onclick="switchTab('live',this)">📺 Live TV</div>
-<div class="tab" onclick="switchTab('upload',this)">📤 Upload</div>
-<div class="tab" onclick="switchTab('chat',this)">💬 Chat</div>
+<div class="tab active" onclick="switchTab('foryou',this)">🎬 For You - LIVE</div>
+<div class="tab" onclick="switchTab('fb',this)">📘 Facebook Reel</div>
+<div class="tab" onclick="switchTab('yt',this)">▶️ YouTube Channel</div>
+<div class="tab" onclick="switchTab('upload',this)">📤 Upload - Unlimited</div>
 </div>
-<div id="searchBar" style="display:none;padding:10px;background:#111"><input type="text" id="searchInput" placeholder="🔍 Search..." onkeyup="searchVideo()"></div>
-<div id="videos"></div>
-<div id="live" style="display:none"><h3 style="text-align:center;color:#f57224">📺 Live TV</h3><div class="card"><p style="padding:10px">Somoy TV Live</p><iframe src="https://www.youtube.com/embed/rbL5v3qXxN0" allowfullscreen></iframe></div></div>
-<div id="upload" style="display:none"><div style="background:#111;margin:10px;padding:15px;border-radius:12px;border:2px dashed #f57224"><h3 style="color:#f57224;text-align:center">📤 Unlimited Upload</h3><input type="file" id="upFile" accept="video/*"><input type="text" id="upTitle" placeholder="Title"><button onclick="realUpload()" style="width:100%;padding:14px;background:#f57224;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:10px">🚀 UPLOAD</button><div id="myVideos"></div></div></div>
-<div id="chat" style="display:none"><h3 style="text-align:center;color:#00c853">💬 Worldwide Chat</h3><div id="chatBox"></div><div style="display:flex;padding:10px;gap:5px"><input type="text" id="chatInput" placeholder="Message..."><button onclick="sendChat()" style="padding:12px 18px;background:#00c853;color:white;border:none;border-radius:20px">Send</button></div></div>
 
-<div id="loginModal" class="modal"><div class="modalBox"><h3 style="color:#f57224;text-align:center">👤 Login</h3><input type="text" id="userName" placeholder="আপনার নাম"><button onclick="doLogin()" style="width:100%;padding:12px;background:#00c853;color:white;border:none;border-radius:8px;margin-top:10px">LOGIN</button><button onclick="closeModal('loginModal')" style="width:100%;padding:10px;background:#222;color:white;border:none;border-radius:8px;margin-top:6px">Close</button></div></div>
+<div class="feed" id="feed"></div>
+
+<div id="fb" style="display:none;max-width:500px;margin:0 auto">
+<div class="card">
+<div class="ad-badge">🔥 Daraz Ad 79% OFF</div>
+<!-- আপনার দেওয়া Facebook Reel -->
+<iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&show_text=0&width=500" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+<div class="info">
+<p><b>🔥 Facebook Viral Reel - Masrafi Islam BD</b></p>
+<p style="color:#aaa;font-size:11px">@masrafiislambd • Facebook Reel</p>
+<a href="https://www.facebook.com/share/r/1A4DC2HSCd/" target="_blank" class="btn btn-fb" style="display:block;text-decoration:none">📘 Full Video Facebook এ দেখুন</a>
+<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" class="btn" style="display:block;background:#fff;color:#f57224;text-decoration:none;text-align:center">🛒 Daraz 79% OFF - ৳299</a>
+</div>
+</div>
+<div class="card">
+<p style="padding:12px;font-weight:bold">📘 আপনার Facebook Page এর সব Video</p>
+<iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+</div>
+</div>
+
+<div id="yt" style="display:none;max-width:500px;margin:0 auto">
+<div class="card">
+<p style="padding:12px;font-weight:bold">▶️ Masrafi Islam BD - YouTube Channel</p>
+<iframe src="https://www.youtube.com/embed?listType=user&list=masrafiislambd" allowfullscreen style="height:280px"></iframe>
+<div class="info">
+<a href="https://youtube.com/@masrafiislambd?si=4RtrSu5EZxBAK6ps" target="_blank" class="btn btn-yt" style="display:block;text-decoration:none;text-align:center">📺 YouTube Channel Subscribe করুন</a>
+</div>
+</div>
+<div class="card">
+<p style="padding:12px">🔥 Latest Islamic Videos</p>
+<iframe src="https://www.youtube.com/embed/videoseries?list=PL" allowfullscreen style="height:400px"></iframe>
+</div>
+</div>
+
+<div id="upload" style="display:none;max-width:500px;margin:0 auto;padding:12px">
+<div style="background:#111;padding:18px;border-radius:15px;border:2px dashed #f57224">
+<h3 style="color:#f57224;text-align:center">📤 Unlimited Upload - সবাই দেখবে</h3>
+<input type="file" id="upFile" accept="video/*" style="width:100%;padding:10px;background:#222;color:white;border-radius:8px;margin:6px 0">
+<input type="text" id="upTitle" placeholder="Title" style="width:100%;padding:12px;background:#222;color:white;border-radius:8px;border:1px solid #444">
+<button onclick="uploadVideo()" style="width:100%;padding:14px;background:#f57224;color:white;border:none;border-radius:10px;font-weight:bold;margin-top:8px">🚀 UPLOAD - For You তে যাবে</button>
+</div>
+</div>
 
 <script>
-let videos=[{title:"🔥 Viral Funny Video",src:"https://www.w3schools.com/html/mov_bbb.mp4",likes:152,comments:12},{title:"🇧🇩 BD News Today",src:"https://www.w3schools.com/html/movie.mp4",likes:89,comments:5}];
-let currentUser=localStorage.getItem('appUser')||'Guest';
-function renderVideos(filter=""){
-let container=document.getElementById('videos');container.innerHTML="";
+let videos=[
+{title:"🔥 Facebook Viral Reel - আপনার দেওয়া Video",user:"@masrafiislambd",src:"https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/r/1A4DC2HSCd/&show_text=0&width=500",type:"facebook",isFb:true},
+{title:"সততার পুরস্কার! সালার পেল ১ লাখ টাকার ফোন 📱❤️",user:"@masrafiislambd",src:"https://www.youtube.com/embed/dQw4w9WgXcQ",type:"youtube"},
+{title:"গরিব ফলওয়ালা সালারের সততা দেখে অবাক ধনী মহিলা!",user:"@masrafiislambd",src:"https://www.youtube.com/embed/9bZkp7q19f0",type:"youtube"},
+{title:"বৃদ্ধের বিরিয়ানি ফেলে দিল! শেষে চাকরি হারিয়ে কাঁদল মেয়েটি 😢",user:"@masrafiislambd",src:"https://www.youtube.com/embed/kJQP7kiw5Fk",type:"youtube"},
+{title:"📤 User Upload Video - TikTok Style",user:"@Rahim",src:"https://www.w3schools.com/html/mov_bbb.mp4",type:"mp4"}
+];
+
+function renderFeed(){
+let feed=document.getElementById('feed');
+feed.innerHTML="";
 videos.forEach((v,i)=>{
-if(filter && !v.title.toLowerCase().includes(filter.toLowerCase()))return;
-container.innerHTML+=`<div class="card">
-<video id="vid${i}" controls poster="https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg"><source src="${v.src}" type="video/mp4"></video>
-<div id="adBanner${i}" class="adBanner">📢 Sponsor - Daraz Deal চলছে!</div>
+let player=v.type=='mp4'?`<video controls playsinline><source src="${v.src}"></video>`:`<iframe src="${v.src}" allowfullscreen></iframe>`;
+feed.innerHTML+=`
+<div class="card">
+<div class="ad-badge">Ad - Daraz 79% OFF</div>
+${player}
 <div class="info">
 <p><b>${v.title}</b></p>
-<div style="display:flex;gap:5px"><div class="btn btn-like" style="flex:1" onclick="likeVideo(${i})">❤️ Like (${v.likes})</div><div class="btn btn-like" style="flex:1" onclick="commentVideo(${i})">💬 Comment</div></div>
-<div class="btn btn-play" onclick="playVideo('vid${i}',${i})">▶️ PLAY</div>
-<div class="btn btn-down" onclick="downloadVideo('${v.src}')">⬇️ DOWNLOAD</div>
-<div class="btn btn-share" onclick="shareVideo('${v.title}')">🔗 SHARE</div>
-<a class="btn-daraz" href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank">🛒 Daraz Deal ৳299 - Click</a>
-</div></div>`;
+<p style="color:#aaa;font-size:11px">${v.user} • ${v.type}</p>
+<div class="btn btn-play" onclick="playWithAd()">▶️ PLAY - Monetag Ad সহ</div>
+<div class="btn btn-down" onclick="downloadWithAd()">⬇️ DOWNLOAD - Daraz Ad সহ</div>
+<div style="display:flex;gap:6px;margin-top:6px">
+<a href="https://youtube.com/@masrafiislambd?si=4RtrSu5EZxBAK6ps" target="_blank" style="flex:1;background:#ff0000;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:12px">📺 YouTube Subscribe</a>
+<a href="https://www.facebook.com/share/r/1A4DC2HSCd/" target="_blank" style="flex:1;background:#1877f2;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:12px">📘 Facebook Follow</a>
+</div>
+<a href="https://s.daraz.com.bd/s.YeIxh?cc" target="_blank" style="display:block;background:#fff;color:#f57224;text-align:center;padding:11px;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:6px">🛒 Daraz Mega Deal ৳299 - CLICK</a>
+</div>
+</div>`;
 });
 }
-renderVideos();
-function switchTab(id,el){['videos','live','upload','chat'].forEach(x=>document.getElementById(x).style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-// CLEAN PLAY - NO ALERT, NO POPUP
-function playVideo(vid,i){
-document.getElementById(vid).play();
-// মাঝে মাঝে Banner Ad দেখাবে - Alert না
-let banner=document.getElementById('adBanner'+i);
-banner.style.display='block';
-setTimeout(()=>{banner.style.display='none'},4000);
-}
-// CLEAN DOWNLOAD - NO POPUP
-function downloadVideo(url){
-let a=document.createElement('a');a.href=url;a.download='video.mp4';a.click();
-}
-function shareVideo(t){if(navigator.share){navigator.share({title:t,url:location.href})}else{alert('Link Copied: '+location.href);}}
-function realUpload(){
+
+function playWithAd(){window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');}
+function downloadWithAd(){window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');setTimeout(()=>{window.location.href='https://s.daraz.com.bd/s.YeIxh?cc';},1000);}
+
+function uploadVideo(){
 let file=document.getElementById('upFile').files[0];
-let title=document.getElementById('upTitle').value||'New Video';
+let title=document.getElementById('upTitle').value;
 if(!file){alert('Video Select করুন!');return;}
 let reader=new FileReader();
-reader.onload=function(e){videos.unshift({title:title,src:e.target.result,likes:0,comments:0});renderVideos();}
+reader.onload=(e)=>{
+videos.unshift({title:title||'New Video',user:'@You',src:e.target.result,type:'mp4'});
+renderFeed();
+switchTab('foryou',document.querySelector('.tab'));
+window.open('https://demper.org/4/e8283733c30352cb0223ec5729c1cb88','_blank');
+}
 reader.readAsDataURL(file);
 }
-function likeVideo(i){videos[i].likes++;renderVideos();}
-function commentVideo(i){let c=prompt('Comment লিখুন:');if(c){videos[i].comments++;renderVideos();}}
-function openSearch(){let s=document.getElementById('searchBar');s.style.display=s.style.display=='none'?'block':'none';}
-function searchVideo(){renderVideos(document.getElementById('searchInput').value);}
-function sendChat(){let txt=document.getElementById('chatInput').value;if(!txt)return;let box=document.getElementById('chatBox');box.innerHTML+=`<div class="msg">👤 ${currentUser}: ${txt}</div>`;document.getElementById('chatInput').value='';}
-function openLogin(){document.getElementById('loginModal').style.display='flex';}
-function doLogin(){let n=document.getElementById('userName').value;if(n){currentUser=n;localStorage.setItem('appUser',n);closeModal('loginModal');renderVideos();}}
-function closeModal(id){document.getElementById(id).style.display='none';}
+
+function switchTab(id,el){
+document.getElementById('feed').style.display='none';
+document.getElementById('fb').style.display='none';
+document.getElementById('yt').style.display='none';
+document.getElementById('upload').style.display='none';
+document.getElementById(id).style.display='block';
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+el.classList.add('active');
+if(id=='foryou')renderFeed();
+}
+renderFeed();
 </script>
 </body>
-                                                                                                                         </html>
+  </html>
